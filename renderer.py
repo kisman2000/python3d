@@ -7,14 +7,15 @@ KEY_S = 83
 KEY_D = 68
 KEY_LSHIFT = 16
 
-fov = 10
+fov = 2
 a = (fov / 180) * math.pi
 
 x0 = 300
 y0 = 300
 
 aspectX = 4
-aspectY = 3
+aspectY = 4
+aspectZ = min(aspectX, aspectY) * 2
 
 cameraX = 0
 cameraY = 30
@@ -26,8 +27,8 @@ def modify(point) :
     return [ point[0] + x0, point[1] + y0 ]
 
 def project(x, y, z) :
-    x = (x + cameraX) / ((z + cameraZ) * math.tan(a / aspectX))
-    y = (y + cameraY) / ((z + cameraZ) * math.tan(a / aspectY))
+    x = (x + cameraX) / ((z / aspectZ + cameraZ) * math.tan(a / aspectX))
+    y = (y + cameraY) / ((z / aspectZ + cameraZ) * math.tan(a / aspectY))
 
     return [ x, y ]
 
@@ -130,7 +131,7 @@ graph.penColor("black")
 
 cube(50, 50, 1, 30)
 cube(50, 50 + 60, 1, 30)
-cube(50 + 60, 50, 1, 30)
+cube(50 + 80, 50, 1, 40)
 
 
 graph.run()
