@@ -44,6 +44,27 @@ def lineTo(point) :
 def line(point1, point2) :
     return graph.line(modify(point1)[0], modify(point1)[1], modify(point2)[0], modify(point2)[1])
 
+def update() :
+    for pair in objects :
+        object1 = pair[0]
+        x1 = pair[1]
+        y1 = pair[2]
+        z1 = pair[3]
+        x2 = pair[4]
+        y2 = pair[5]
+        z2 = pair[6]
+        
+        point1 = point(x1, y1, z1)
+        point2 = point(x2, y2, z2)
+
+        graph.deleteObject(object1)
+
+        objects.remove(pair)
+
+        object2 = line(point1, point2)
+
+        objects.append( [ object2, x1, y1, z1, x2, y2, z2 ] )
+
 def key(event) :
     global cameraX, cameraY, cameraZ
 
@@ -65,25 +86,7 @@ def key(event) :
     if(event.keycode == KEY_LSHIFT) :
         cameraY += 1
 
-    for pair in objects :
-        object1 = pair[0]
-        x1 = pair[1]
-        y1 = pair[2]
-        z1 = pair[3]
-        x2 = pair[4]
-        y2 = pair[5]
-        z2 = pair[6]
-        
-        point1 = point(x1, y1, z1)
-        point2 = point(x2, y2, z2)
-
-        graph.deleteObject(object1)
-
-        objects.remove(pair)
-
-        object2 = line(point1, point2)
-
-        objects.append( [ object2, x1, y1, z1, x2, y2, z2 ] )
+    update()
 
 def aabb(minX, minY, minZ, maxX, maxY, maxZ) :
     point1 = point(minX, minY, minZ)
@@ -125,6 +128,7 @@ def cube(centerX, centerY, centerZ, size) :
     aabb(centerX - size, centerY - size, centerZ - size, centerX + size, centerY + size, centerZ + size)
 
 graph.onKey(key)
+graph.onTimer(update, 1)
 
 graph.penColor("black")
 
