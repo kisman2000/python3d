@@ -10,21 +10,21 @@ KEY_LSHIFT = 16
 fov = 2
 a = (fov / 180) * math.pi
 
-x0 = 300
-y0 = 300
+x0 = 0.5
+y0 = 0.5
 
 aspectX = 4
 aspectY = 4
 aspectZ = min(aspectX, aspectY) * 2
 
 cameraX = 0
-cameraY = 30
+cameraY = 0
 cameraZ = 40
 
 objects = [ [ None, 0, 0, 0, 0, 0, 0 ] ]
 
 def modify(point) : 
-    return [ point[0] + x0, point[1] + y0 ]
+    return [ point[0] + x0 * graph.DEF_GRAPH_WIDTH, point[1] + y0 * graph.DEF_GRAPH_HEIGHT ]
 
 def project(x, y, z) :
     x = (x + cameraX) / ((z / aspectZ + cameraZ) * math.tan(a / aspectX))
@@ -133,9 +133,9 @@ graph.onTimer(update, 1)
 graph.penColor("black")
 
 
-cube(50, 50, 1, 30)
-cube(50, 50 + 60, 1, 30)
-cube(50 + 80, 50, 1, 40)
+cube(0, 0, 1, 30)
+cube(0, 60, 1, 30)
+cube(80, 0, 1, 40)
 
 
 graph.run()
