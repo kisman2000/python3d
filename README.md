@@ -6,4 +6,4 @@ It based on russian lib of 2d renderer for students.
 
 Also biggest thanks to cubic with helping with projection <3
 
-Showcase: https://youtu.be/_IYysAt_3AU
+Showcase: https://youtu.be/oUnubshMBII
