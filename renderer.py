@@ -127,15 +127,51 @@ def aabb(minX, minY, minZ, maxX, maxY, maxZ) :
 def cube(centerX, centerY, centerZ, size) :
     aabb(centerX - size, centerY - size, centerZ - size, centerX + size, centerY + size, centerZ + size)
 
+def pyramid(centerX, centerY, centerZ, height, size) :
+    minX = centerX - size
+    minZ = centerZ - size
+    maxX = centerX + size
+    maxZ = centerZ + size
+ 
+    point1 = point(minX, centerY, minZ)
+    point2 = point(maxX, centerY, minZ)
+    point3 = point(maxX, centerY, maxZ)
+    point4 = point(minX, centerY, maxZ)
+ 
+    point5 = point(centerX, centerY - height, centerZ)
+ 
+    line1 = line(point1, point2)
+    line2 = line(point2, point3)
+    line3 = line(point3, point4)
+    line4 = line(point4, point1)
+ 
+    line5 = line(point1, point5)
+    line6 = line(point2, point5)
+    line7 = line(point3, point5)
+    line8 = line(point4, point5)
+ 
+    objects.append( [ line1, minX, centerY, minZ, maxX, centerY, minZ ] )
+    objects.append( [ line2, maxX, centerY, minZ, maxX, centerY, maxZ ] )
+    objects.append( [ line3, maxX, centerY, maxZ, minX, centerY, maxZ ] )
+    objects.append( [ line4, minX, centerY, maxZ, minX, centerY, minZ ] )
+    objects.append( [ line5, minX, centerY, minZ, centerX, centerY - height, centerZ ] )
+    objects.append( [ line6, maxX, centerY, minZ, centerX, centerY - height, centerZ ] )
+    objects.append( [ line7, maxX, centerY, maxZ, centerX, centerY - height, centerZ ] )
+    objects.append( [ line8, minX, centerY, maxZ, centerX, centerY - height, centerZ ] )
+
 graph.onKey(key)
 graph.onTimer(update, 1)
 
 graph.penColor("black")
 
+aabb(-15, 0, -15, 15, 30, 15)
+pyramid(0, 0, 0, 30, 50)
+pyramid(0, -30, 0, 30, 30)
+pyramid(0, -60, 0, 30, 20)
 
-cube(0, 0, 1, 30)
-cube(0, 60, 1, 30)
-cube(80, 0, 1, 40)
+# cube(0, 0, 1, 30)
+# cube(0, 60, 1, 30)
+# cube(80, 0, 1, 40)
 
 
 graph.run()
